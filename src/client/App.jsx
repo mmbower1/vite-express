@@ -11,20 +11,21 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     // In dev: proxied to http://localhost:3000/api/data
-    //     // In prod: same origin
-    //     const response = await axios.get("/api/data");
-    //     setData(response.data);
-    //     setLoading(false);
-    //   } catch (err) {
-    //     setError(
-    //       err.response?.data?.message || err.message || "Failed to fetch"
-    //     );
-    //     setLoading(false);
-    //   }
-    // };
+    const fetchItems = async () => {
+      try {
+        // In dev: proxied to http://localhost:3000/api/data
+        // In prod: same origin
+        const response = await axios.get("/api/data");
+        console.log("response, ", response);
+        setData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError(
+          err.response?.data?.message || err.message || "Failed to fetch"
+        );
+        setLoading(false);
+      }
+    };
     const fetchUsers = async () => {
       try {
         // In dev: proxied to http://localhost:3000/api/data
@@ -41,26 +42,8 @@ function App() {
       }
     };
     fetchUsers();
-    // fetchData();
+    fetchItems();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       // In dev: proxied to http://localhost:3000/api/data
-  //       // In prod: same origin
-  //       const response = await axios.get("/api/users");
-  //       setData(response.data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError(
-  //         err.response?.data?.message || err.message || "Failed to fetch"
-  //       );
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
 
   if (loading) return <div className="p-8 text-center">Loading data...</div>;
   if (error) return <div className="p-8 text-red-600">Error: {error}</div>;
@@ -106,9 +89,21 @@ function App() {
             Data Items
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.data.map((item) => (
+            {data.items.map((item) => (
               <div
                 key={item.id}
+                className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition"
+              >
+                <h3 className="text-xl font-bold">{item.name}</h3>
+                <p className="text-3xl font-extrabold mt-2">{item.value}</p>
+                <p className="text-3xl font-extrabold mt-2">{item.word}</p>
+              </div>
+            ))}
+          </div>
+          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {data.data.map((item) => (
+              <div
+                key={data.id}
                 className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition"
               >
                 <h3 className="text-xl font-bold">{item.email}</h3>
@@ -118,7 +113,7 @@ function App() {
                 <p className="text-3xl font-extrabold mt-2">{item.value}</p>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div className="mt-10 text-center text-sm text-gray-500">
             <p>

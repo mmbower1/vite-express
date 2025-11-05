@@ -25,9 +25,9 @@ app.get("/api/data", (req, res) => {
     message: "Hello from Express API!",
     timestamp: new Date().toISOString(),
     items: [
-      { id: 1, name: "Item A", value: 42 },
-      { id: 2, name: "Item B", value: 100 },
-      { id: 3, name: "Item C", value: 75 },
+      { id: 1, name: "Item A", value: 42, word: "fourty two" },
+      { id: 2, name: "Item B", value: 100, word: "one hundred" },
+      { id: 3, name: "Item C", value: 75, word: "seventy five" },
     ],
   });
 });
